@@ -10,26 +10,58 @@ import os
 import pynotify
 import gobject
 
+#library.gnome.org
+#http://www.pygtk.org/docs/pygtk/
 
-def on_Timer_Activate(event, data = None):
-        print "Timer activate"
-        gobject.timeout_add(3000, on_Timer_Expire)
+def on_Bomb1(event, data = None):
+    timer_Activate(3000)
     
-def on_Timer_Expire():
-    pynotify.init("Shy Applet")
-    notification = pynotify.Notification("Shy Time", "Your Shy is Ready")
-    notification.set_urgency(pynotify.URGENCY_LOW)
-    notification.set_timeout(4000)
-    notification.show()
-
-
+    
+def on_Timer_Set(event, data = None):
+    print data
+    dialog = gtk.Dialog("Enter time", None, gtk.DIALOG_MODAL, (gtk.STOCK_OK, gtk.RESPONSE_ACCEPT, gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT))
+    timeEntry = gtk.Entry()
+    
+    dialog.vbox.add(timeEntry)
+        
+    dialog.show_all()
+    
+    if(dialog.run() == gtk.RESPONSE_ACCEPT):
+        print "accept"
+        enteredTime = timeEntry.get_text()
+        print enteredTime
+        
+        try:
+            #overflow alert
+            intEnteredTime = int(enteredTime)
+            timer_Activate(intEnteredTime*1000)
+        except ValueError:
+            pass
+      
+    else:
+        print "cancel"
+        
+    dialog.destroy()    
+    
 def on_About_Press(event, data = None):
+    print data
     gnome.ui.About("Bomb Applet", "0.1", "GNU General Public License v.2",
                        "Bomb GNOME applet",
                        ["Alaa Salman <alaa@codedemigod.com>",],
                        ).show()
     
-        
+def on_Timer_Expire():
+    pynotify.init("Bomb Applet")
+    notification = pynotify.Notification("Bomb Applet", "KABOOOM")
+    notification.set_urgency(pynotify.URGENCY_LOW)
+    notification.set_timeout(4000)
+    notification.show()
+    
+
+def timer_Activate(timeTillExpiration = 3000):
+    gobject.timeout_add(timeTillExpiration, on_Timer_Expire)
+    
+            
 def sample_factory(applet, iid):
         
     image = gtk.Image()
@@ -37,11 +69,16 @@ def sample_factory(applet, iid):
     
     ppmenu_xml = """
         <popup name="button3">
-            <menuitem name="Timer Item" verb="Timer" label="Timer"/>
+           
+            <submenu name="BombsMenu" label="Bombs">
+                <menuitem name="m1" verb="Bomb1" label="Bomb1"/>
+                <menuitem name="m2" verb="SetTimer" label="Custom Bomb"/>
+            </submenu>
+         
             <menuitem name="About Item" verb="About" stockid="gtk-about"/>
         </popup>        
         """
-    ppmenu_verbs = [("About", on_About_Press),("Timer", on_Timer_Activate)]
+    ppmenu_verbs = [("About", on_About_Press), ("Bomb1", on_Bomb1), ("SetTimer", on_Timer_Set)]
             
     applet.setup_menu(ppmenu_xml, ppmenu_verbs, None)
     
