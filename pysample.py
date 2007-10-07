@@ -19,8 +19,13 @@ def on_Bomb1(event, data = None):
     
 def on_Timer_Set(event, data = None):
     print data
-    dialog = gtk.Dialog("Enter time", None, gtk.DIALOG_MODAL, (gtk.STOCK_OK, gtk.RESPONSE_ACCEPT, gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT))
+    dialog = gtk.Dialog("Enter time In Seconds", None, gtk.DIALOG_MODAL)
+    ok_button = dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_ACCEPT)
+    cancel_button = dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT)
+    
     timeEntry = gtk.Entry()
+    
+    timeEntry.connect_object("activate", gtk.Button.clicked, ok_button)
     
     dialog.vbox.add(timeEntry)
         
@@ -67,6 +72,8 @@ def sample_factory(applet, iid):
     image = gtk.Image()
     image.set_from_file("/home/john/dev/pyapplet/bomb.png")
     
+    #pixtype = 'stock'|'filename'|'pixbuf'
+    #pixname = filepath
     ppmenu_xml = """
         <popup name="button3">
            
@@ -78,7 +85,7 @@ def sample_factory(applet, iid):
             <menuitem name="About Item" verb="About" stockid="gtk-about"/>
         </popup>        
         """
-    ppmenu_verbs = [("About", on_About_Press), ("Bomb1", on_Bomb1), ("SetTimer", on_Timer_Set)]
+    ppmenu_verbs = [("About", on_About_Press ), ("Bomb1", on_Bomb1), ("SetTimer", on_Timer_Set)]
             
     applet.setup_menu(ppmenu_xml, ppmenu_verbs, None)
     
