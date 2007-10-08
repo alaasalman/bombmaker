@@ -28,8 +28,10 @@ def on_Timer_Set(event, data = None):
     ok_button = dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_ACCEPT)
     cancel_button = dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT)
     
-    timeEntry = gtk.Entry()
+    
     timeLabel = gtk.Label("Time")
+    timeEntry = gtk.Entry()
+    
     
     extraMessageTextView = gtk.TextView()
     extraMessageScrolledWindow = gtk.ScrolledWindow()
@@ -41,21 +43,21 @@ def on_Timer_Set(event, data = None):
     extraMessageScrolledWindow.set_shadow_type(gtk.SHADOW_ETCHED_IN)
     timeEntry.connect_object("activate", gtk.Button.clicked, ok_button)
     
-    parentHBox = gtk.HBox(False, 4)
+    extraMessageVBox = gtk.VBox()    
     
-    labelsVBox = gtk.VBox(False, 5)
-    textWidgetsVBox = gtk.VBox(False, 5)
+    extraMessageVBox.add(gtk.Label("Optional Message"))
+    extraMessageVBox.add(extraMessageScrolledWindow)
     
-    labelsVBox.add(timeLabel)
-    labelsVBox.add(extraMessageLabel)
+    timeVBox = gtk.HBox(False, 8)
     
-    textWidgetsVBox.add(timeEntry)
-    textWidgetsVBox.add(extraMessageScrolledWindow)
+    timeVBox.add(timeLabel)
+    timeVBox.add(timeEntry)    
     
-    parentHBox.add(labelsVBox)
-    parentHBox.add(textWidgetsVBox)
-    
-    dialog.vbox.add(parentHBox)
+    dialog.vbox.set_spacing(5) 
+    dialog.set_border_width(10)       
+    dialog.vbox.add(timeVBox)
+    dialog.vbox.add(gtk.HSeparator())    
+    dialog.vbox.add(extraMessageVBox)
     
     
     dialog.set_icon_from_file("/home/john/dev/pyapplet/icons/icon.png")    
