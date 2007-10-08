@@ -85,7 +85,7 @@ def on_Timer_Set(event, data = None):
             
             #check if user added an extra message
             if(len(extraMessage) > 0):
-                notificationMessage += "\n%s" % extraMessage
+                notificationMessage += "\nExtra Message:\n%s" % extraMessage
             
             timer_Activate(intEnteredTime*1000, "KABOOM", notificationMessage)
             
