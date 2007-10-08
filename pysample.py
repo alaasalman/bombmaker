@@ -23,19 +23,19 @@ def on_Bomb5(event, data = None):
     
 def on_Timer_Set(event, data = None):
     
-    dialog = gtk.Dialog("Enter time In Seconds", None, gtk.DIALOG_MODAL)
+    dialog = gtk.Dialog("Custom Bomb", None, gtk.DIALOG_MODAL)
     
     ok_button = dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_ACCEPT)
     cancel_button = dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT)
     
     
-    timeLabel = gtk.Label("Time")
+    timeLabel = gtk.Label("Time(seconds)")
     timeEntry = gtk.Entry()
     
     
     extraMessageTextView = gtk.TextView()
     extraMessageScrolledWindow = gtk.ScrolledWindow()
-    extraMessageLabel = gtk.Label("Extra Msg")
+    extraMessageLabel = gtk.Label("Optional Message")
     
     extraMessageScrolledWindow.add(extraMessageTextView)
     
@@ -43,19 +43,22 @@ def on_Timer_Set(event, data = None):
     extraMessageScrolledWindow.set_shadow_type(gtk.SHADOW_ETCHED_IN)
     timeEntry.connect_object("activate", gtk.Button.clicked, ok_button)
     
-    extraMessageVBox = gtk.VBox()    
+    extraMessageVBox = gtk.VBox(False, 8)    
     
-    extraMessageVBox.add(gtk.Label("Optional Message"))
+    extraMessageVBox.add(extraMessageLabel)
     extraMessageVBox.add(extraMessageScrolledWindow)
     
-    timeVBox = gtk.HBox(False, 8)
+           
+    timeHBox = gtk.HBox(False, 8)
     
-    timeVBox.add(timeLabel)
-    timeVBox.add(timeEntry)    
+    timeHBox.add(timeLabel)
+    timeHBox.add(timeEntry)    
+    
+    
     
     dialog.vbox.set_spacing(5) 
     dialog.set_border_width(10)       
-    dialog.vbox.add(timeVBox)
+    dialog.vbox.add(timeHBox)
     dialog.vbox.add(gtk.HSeparator())    
     dialog.vbox.add(extraMessageVBox)
     
