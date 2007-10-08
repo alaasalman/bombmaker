@@ -4,7 +4,6 @@ pygtk.require('2.0')
 
 import gtk
 import gnomeapplet
-import gnome.ui
 import sys
 import os
 import pynotify
@@ -23,16 +22,42 @@ def on_Bomb5(event, data = None):
     timer_Activate(300000, "KABOOOOOM", "Your 5 min bomb just exploded.")
     
 def on_Timer_Set(event, data = None):
-    print data
+    
     dialog = gtk.Dialog("Enter time In Seconds", None, gtk.DIALOG_MODAL)
+    
     ok_button = dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_ACCEPT)
     cancel_button = dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT)
     
     timeEntry = gtk.Entry()
+    timeLabel = gtk.Label("Time")
     
+    extraMessageTextView = gtk.TextView()
+    extraMessageScrolledWindow = gtk.ScrolledWindow()
+    extraMessageLabel = gtk.Label("Extra Msg")
+    
+    extraMessageScrolledWindow.add(extraMessageTextView)
+    
+    extraMessageScrolledWindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+    extraMessageScrolledWindow.set_shadow_type(gtk.SHADOW_ETCHED_IN)
     timeEntry.connect_object("activate", gtk.Button.clicked, ok_button)
     
-    dialog.vbox.add(timeEntry)
+    parentHBox = gtk.HBox(False, 4)
+    
+    labelsVBox = gtk.VBox(False, 5)
+    textWidgetsVBox = gtk.VBox(False, 5)
+    
+    labelsVBox.add(timeLabel)
+    labelsVBox.add(extraMessageLabel)
+    
+    textWidgetsVBox.add(timeEntry)
+    textWidgetsVBox.add(extraMessageScrolledWindow)
+    
+    parentHBox.add(labelsVBox)
+    parentHBox.add(textWidgetsVBox)
+    
+    dialog.vbox.add(parentHBox)
+    
+    
     dialog.set_icon_from_file("/home/john/dev/pyapplet/icons/icon.png")    
     dialog.show_all()
     
@@ -42,7 +67,23 @@ def on_Timer_Set(event, data = None):
         try:
             #overflow alert
             intEnteredTime = int(enteredTime)
-            timer_Activate(intEnteredTime*1000, "KABOOM", "Your %s second bomb just exploded." % intEnteredTime)
+            
+            #extra text buffer from textview
+            textBuffer = extraMessageTextView.get_buffer()
+            startIter = textBuffer.get_start_iter()
+            endIter = textBuffer.get_end_iter()
+            
+            #extract text from text buffer
+            extraMessage = textBuffer.get_text(startIter, endIter)
+            
+            notificationMessage = "Your %s second bomb just exploded." % intEnteredTime
+            
+            #check if user added an extra message
+            if(len(extraMessage) > 0):
+                notificationMessage += "\n%s" % extraMessage
+            
+            timer_Activate(intEnteredTime*1000, "KABOOM", notificationMessage)
+            
         except ValueError:
             pass
       
