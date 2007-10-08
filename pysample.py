@@ -14,8 +14,13 @@ import gobject
 #http://www.pygtk.org/docs/pygtk/
 
 def on_Bomb1(event, data = None):
-    timer_Activate(3000)
+    timer_Activate(60000)
     
+def on_Bomb3(event, data = None):
+    timer_Activate(180000)
+    
+def on_Bomb5(event, data = None):
+    timer_Activate(300000)
     
 def on_Timer_Set(event, data = None):
     print data
@@ -32,10 +37,8 @@ def on_Timer_Set(event, data = None):
     dialog.show_all()
     
     if(dialog.run() == gtk.RESPONSE_ACCEPT):
-        print "accept"
         enteredTime = timeEntry.get_text()
-        print enteredTime
-        
+                
         try:
             #overflow alert
             intEnteredTime = int(enteredTime)
@@ -59,7 +62,7 @@ def on_Timer_Expire():
     pynotify.init("Bomb Applet")
     notification = pynotify.Notification("Bomb Applet", "KABOOOM")
     notification.set_urgency(pynotify.URGENCY_LOW)
-    notification.set_timeout(4000)
+    notification.set_timeout(0)
     notification.show()
     
 
@@ -72,20 +75,25 @@ def sample_factory(applet, iid):
     image = gtk.Image()
     image.set_from_file("/home/john/dev/pyapplet/bomb.png")
     
-    #pixtype = 'stock'|'filename'|'pixbuf'
-    #pixname = filepath
     ppmenu_xml = """
         <popup name="button3">
            
-            <submenu name="BombsMenu" label="Bombs">
-                <menuitem name="m1" verb="Bomb1" label="Bomb1"/>
-                <menuitem name="m2" verb="SetTimer" label="Custom Bomb"/>
+            <submenu name="BombsMenu" label="Bombs" pixtype="filename" pixname="/home/john/dev/pyapplet/bomb3.png">
+                <menuitem name="m1" verb="Bomb1" label="Baby Bomb(1min)" pixtype="filename" pixname="/home/john/dev/pyapplet/bomb6.png"/>
+                <menuitem name="m1" verb="Bomb3" label="Regular Bomb(3min)" pixtype="filename" pixname="/home/john/dev/pyapplet/bomb7.png"/>
+                <menuitem name="m1" verb="Bomb5" label="Big Bomb(5min)" pixtype="filename" pixname="/home/john/dev/pyapplet/bomb12.png"/>
+                <menuitem name="m2" verb="SetTimer" label="Custom Bomb(custom)" pixtype="filename" pixname="/home/john/dev/pyapplet/bomb17.png"/>
             </submenu>
          
             <menuitem name="About Item" verb="About" stockid="gtk-about"/>
         </popup>        
         """
-    ppmenu_verbs = [("About", on_About_Press ), ("Bomb1", on_Bomb1), ("SetTimer", on_Timer_Set)]
+    ppmenu_verbs = [ ("About", on_About_Press ),
+                     ("Bomb1", on_Bomb1),
+                     ("Bomb3", on_Bomb3),
+                     ("Bomb5", on_Bomb5),
+                     ("SetTimer", on_Timer_Set)
+                    ]
             
     applet.setup_menu(ppmenu_xml, ppmenu_verbs, None)
     
