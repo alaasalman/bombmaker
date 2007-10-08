@@ -33,7 +33,7 @@ def on_Timer_Set(event, data = None):
     timeEntry.connect_object("activate", gtk.Button.clicked, ok_button)
     
     dialog.vbox.add(timeEntry)
-        
+    dialog.set_icon_from_file("/home/john/dev/pyapplet/icons/icon.png")    
     dialog.show_all()
     
     if(dialog.run() == gtk.RESPONSE_ACCEPT):
@@ -52,11 +52,18 @@ def on_Timer_Set(event, data = None):
     dialog.destroy()    
     
 def on_About_Press(event, data = None):
-    print data
-    gnome.ui.About("Bomb Applet", "0.1", "GNU General Public License v.2",
-                       "Bomb GNOME applet",
-                       ["Alaa Salman <alaa@codedemigod.com>", "Icons from FriendlyFire collection by sniffels at devianART "]
-                       ).show()
+    about = gtk.AboutDialog()
+    about.set_name("Bomb Applet")
+    about.set_version("0.1")
+    about.set_website("http://www.codedemigod.com")
+    about.set_authors(["Alaa Salman <alaa@codedemigod.com>", "Icons from FriendlyFire collection by sniffels@devianART"])
+    about.set_copyright("Copyright 2007")
+    about.set_license("GNU General Public License v.2")
+    about.set_logo(gtk.gdk.pixbuf_new_from_file("/home/john/dev/pyapplet/icons/icon.png"))
+    about.set_icon_from_file("/home/john/dev/pyapplet/icons/icon.png")
+    if(about.run() == gtk.RESPONSE_CANCEL):
+        about.destroy()
+    
     
 def on_Timer_Expire(timerTitle, timerMessage):
     pynotify.init("Bomb Applet")
