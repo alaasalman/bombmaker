@@ -14,13 +14,13 @@ import gobject
 #http://www.pygtk.org/docs/pygtk/
 
 def on_Bomb1(event, data = None):
-    timer_Activate(60000)
+    timer_Activate(60000, "KABOOM", "Your 1 min bomb just exploded.")
     
 def on_Bomb3(event, data = None):
-    timer_Activate(180000)
+    timer_Activate(180000, "KABOOOOM", "Your 3 min bomb just exploded.")
     
 def on_Bomb5(event, data = None):
-    timer_Activate(300000)
+    timer_Activate(300000, "KABOOOOOM", "Your 5 min bomb just exploded.")
     
 def on_Timer_Set(event, data = None):
     print data
@@ -42,7 +42,7 @@ def on_Timer_Set(event, data = None):
         try:
             #overflow alert
             intEnteredTime = int(enteredTime)
-            timer_Activate(intEnteredTime*1000)
+            timer_Activate(intEnteredTime*1000, "KABOOM", "Your %s second bomb just exploded." % intEnteredTime)
         except ValueError:
             pass
       
@@ -58,31 +58,31 @@ def on_About_Press(event, data = None):
                        ["Alaa Salman <alaa@codedemigod.com>", "Icons from FriendlyFire collection by sniffels at devianART "]
                        ).show()
     
-def on_Timer_Expire():
+def on_Timer_Expire(timerTitle, timerMessage):
     pynotify.init("Bomb Applet")
-    notification = pynotify.Notification("Bomb Applet", "KABOOOM")
+    notification = pynotify.Notification(timerTitle, timerMessage, "/home/john/dev/pyapplet/icons/kaboombomb.png")
     notification.set_urgency(pynotify.URGENCY_LOW)
     notification.set_timeout(0)
     notification.show()
     
 
-def timer_Activate(timeTillExpiration = 3000):
-    gobject.timeout_add(timeTillExpiration, on_Timer_Expire)
+def timer_Activate(timeTillExpiration = 3000, timerTitle = "Bomb Applet", timerMessage = "KABOOOM"):
+    gobject.timeout_add(timeTillExpiration, on_Timer_Expire, timerTitle, timerMessage)
     
             
 def sample_factory(applet, iid):
         
     image = gtk.Image()
-    image.set_from_file("/home/john/dev/pyapplet/bomb.png")
+    image.set_from_file("/home/john/dev/pyapplet/icons/panelicon.png")
     
     ppmenu_xml = """
         <popup name="button3">
            
-            <submenu name="BombsMenu" label="Bombs" pixtype="filename" pixname="/home/john/dev/pyapplet/bomb3.png">
-                <menuitem name="m1" verb="Bomb1" label="Baby Bomb(1min)" pixtype="filename" pixname="/home/john/dev/pyapplet/bomb6.png"/>
-                <menuitem name="m1" verb="Bomb3" label="Regular Bomb(3min)" pixtype="filename" pixname="/home/john/dev/pyapplet/bomb7.png"/>
-                <menuitem name="m1" verb="Bomb5" label="Big Bomb(5min)" pixtype="filename" pixname="/home/john/dev/pyapplet/bomb12.png"/>
-                <menuitem name="m2" verb="SetTimer" label="Custom Bomb(custom)" pixtype="filename" pixname="/home/john/dev/pyapplet/bomb17.png"/>
+            <submenu name="BombsMenu" label="Bombs" pixtype="filename" pixname="/home/john/dev/pyapplet/icons/bombsicon.png">
+                <menuitem name="m1" verb="Bomb1" label="Baby Bomb(1min)" pixtype="filename" pixname="/home/john/dev/pyapplet/icons/babybomb.png"/>
+                <menuitem name="m1" verb="Bomb3" label="Regular Bomb(3min)" pixtype="filename" pixname="/home/john/dev/pyapplet/icons/regularbomb.png"/>
+                <menuitem name="m1" verb="Bomb5" label="Big Bomb(5min)" pixtype="filename" pixname="/home/john/dev/pyapplet/icons/bigbomb.png"/>
+                <menuitem name="m2" verb="SetTimer" label="Custom Bomb(custom)" pixtype="filename" pixname="/home/john/dev/pyapplet/icons/custombomb.png"/>
             </submenu>
          
             <menuitem name="About Item" verb="About" stockid="gtk-about"/>
