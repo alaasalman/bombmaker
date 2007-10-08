@@ -55,7 +55,7 @@ def on_About_Press(event, data = None):
     print data
     gnome.ui.About("Bomb Applet", "0.1", "GNU General Public License v.2",
                        "Bomb GNOME applet",
-                       ["Alaa Salman <alaa@codedemigod.com>",],
+                       ["Alaa Salman <alaa@codedemigod.com>", "Icons from FriendlyFire collection by sniffels at devianART "]
                        ).show()
     
 def on_Timer_Expire():
