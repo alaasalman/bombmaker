@@ -23,15 +23,26 @@ def on_Bomb5(event, data = None):
     
 def on_Timer_Set(event, data = None):
     
-    dialog = gtk.Dialog("Custom Bomb", None, gtk.DIALOG_MODAL)
+    dialog = gtk.Dialog("Custom Time Bomb", None, gtk.DIALOG_MODAL)
     
     ok_button = dialog.add_button(gtk.STOCK_OK, gtk.RESPONSE_ACCEPT)
     cancel_button = dialog.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT)
     
     
-    timeLabel = gtk.Label("Time(seconds)")
-    timeEntry = gtk.Entry()
+    minutesLabel = gtk.Label("Minutes")
+    minutesSpin = gtk.SpinButton()
+    minutesSpin.set_numeric(True)
+    minutesSpin.set_range(0, 1440) #max range is 1 day
+    minutesSpin.set_wrap(False)
+    minutesSpin.set_increments(1, 1)
     
+    secondsLabel = gtk.Label("Seconds")
+    secondsSpin = gtk.SpinButton()
+    secondsSpin.set_range(0, 60)
+    secondsSpin.set_numeric(True)
+    secondsSpin.set_wrap(True)
+    secondsSpin.set_increments(1, 1)
+        
     
     extraMessageTextView = gtk.TextView()
     extraMessageScrolledWindow = gtk.ScrolledWindow()
@@ -41,8 +52,11 @@ def on_Timer_Set(event, data = None):
     
     extraMessageScrolledWindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
     extraMessageScrolledWindow.set_shadow_type(gtk.SHADOW_ETCHED_IN)
-    timeEntry.connect_object("activate", gtk.Button.clicked, ok_button)
     
+    minutesSpin.connect_object("activate", gtk.Button.clicked, ok_button)
+    secondsSpin.connect_object("activate", gtk.Button.clicked, ok_button)
+    
+    #add to layout
     extraMessageVBox = gtk.VBox(False, 8)    
     
     extraMessageVBox.add(extraMessageLabel)
@@ -51,11 +65,12 @@ def on_Timer_Set(event, data = None):
            
     timeHBox = gtk.HBox(False, 8)
     
-    timeHBox.add(timeLabel)
-    timeHBox.add(timeEntry)    
+    timeHBox.add(minutesLabel)
+    timeHBox.add(minutesSpin)
+    timeHBox.add(secondsLabel)
+    timeHBox.add(secondsSpin)    
     
-    
-    
+        
     dialog.vbox.set_spacing(5) 
     dialog.set_border_width(10)       
     dialog.vbox.add(timeHBox)
@@ -67,11 +82,12 @@ def on_Timer_Set(event, data = None):
     dialog.show_all()
     
     if(dialog.run() == gtk.RESPONSE_ACCEPT):
-        enteredTime = timeEntry.get_text()
-                
+                        
         try:
-            #overflow alert
-            intEnteredTime = int(enteredTime)
+            
+            intEnteredSeconds = secondsSpin.get_value_as_int()
+            intEnteredMinutes = minutesSpin.get_value_as_int()
+            
             
             #extra text buffer from textview
             textBuffer = extraMessageTextView.get_buffer()
@@ -79,15 +95,20 @@ def on_Timer_Set(event, data = None):
             endIter = textBuffer.get_end_iter()
             
             #extract text from text buffer
-            extraMessage = textBuffer.get_text(startIter, endIter)
+            extraMessage = textBuffer.get_text(startIter, endIter, False)
             
-            notificationMessage = "Your %s second bomb just exploded." % intEnteredTime
+            notificationMessage = ""
+            
+            if(intEnteredMinutes > 0):
+                notificationMessage = "Your %s minute, %s second bomb just exploded." % (intEnteredMinutes, intEnteredSeconds)
+            else:
+                notificationMessage = "Your %s second bomb just exploded." % intEnteredSeconds
             
             #check if user added an extra message
             if(len(extraMessage) > 0):
                 notificationMessage += "\nExtra Message:\n%s" % extraMessage
             
-            timer_Activate(intEnteredTime*1000, "KABOOM", notificationMessage)
+            timer_Activate(((intEnteredMinutes*60) + intEnteredSeconds)*1000, "KABOOM", notificationMessage)
             
         except ValueError:
             pass
