@@ -120,7 +120,7 @@ def on_Timer_Set(event, data = None):
     
 def on_About_Press(event, data = None):
     about = gtk.AboutDialog()
-    about.set_name("Bomb Applet")
+    about.set_name("Bomb Maker Applet")
     about.set_version("0.1")
     about.set_website("http://www.codedemigod.com")
     about.set_authors(["Alaa Salman <alaa@codedemigod.com>", "Icons from FriendlyFire collection by sniffels@devianART"])
@@ -133,7 +133,7 @@ def on_About_Press(event, data = None):
     
     
 def on_Timer_Expire(timerTitle, timerMessage):
-    pynotify.init("Bomb Applet")
+    pynotify.init("Bomb Maker Applet")
     notification = pynotify.Notification(timerTitle, timerMessage, "/home/john/dev/pyapplet/icons/kaboombomb.png")
     notification.set_urgency(pynotify.URGENCY_LOW)
     notification.set_timeout(0)
@@ -180,7 +180,7 @@ def run_in_panel():
 
 def run_in_window():
     main_window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-    main_window.set_title("Py Applet")
+    main_window.set_title("Bomb Maker Applet")
     main_window.connect("destroy", gtk.main_quit)
     app = gnomeapplet.Applet()
     sample_factory(app, None)
