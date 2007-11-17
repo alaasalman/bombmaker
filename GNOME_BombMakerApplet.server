@@ -1,5 +1,5 @@
 <oaf_info>
-	<oaf_server iid="OAFIID:GNOME_BombMakerApplet_Factory" type="exe" location="/home/john/dev/bombmakerapplet/bombmaker.py">
+	<oaf_server iid="OAFIID:GNOME_BombMakerApplet_Factory" type="exe" location="/usr/bin/bombmaker">
    		<oaf_attribute name="repo_ids" type="stringv">
 				<item value="IDL:Bonobo/GenericFactory:1.0"/>
 				<item value="IDL:Bonobo/Unknown:1.0"/>
@@ -17,6 +17,6 @@
   		<oaf_attribute name="name" type="string" value="BombMaker Applet"/>
   		<oaf_attribute name="description" type="string" value="BombMaker Py Applet"/>
   		<oaf_attribute name="panel:category" type="string" value="Utility"/>
-  		<oaf_attribute name="panel:icon" type="string" value="/usr/share/amsn/icons/32x32/amsn.png"/>
+  		<oaf_attribute name="panel:icon" type="string" value="/usr/share/bombmaker/icons/icon.png"/>
    </oaf_server>
 </oaf_info>
