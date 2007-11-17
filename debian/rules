@@ -11,6 +11,7 @@
 
 
 PREFIX = /usr
+DESTDIR = $(CURDIR)/debian/bombmaker
 
 configure: configure-stamp
 configure-stamp:
@@ -20,10 +21,6 @@ configure-stamp:
 
 
 build:
-	dh_clean
-	dh_testdir
-
-	$(MAKE)
 
 clean:
 	dh_testdir
@@ -39,7 +36,7 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/bombmaker.
-	$(MAKE) install
+	$(MAKE) install DESTDIR=$(DESTDIR) PREFIX=$(PREFIX)
 
 
 # Build architecture-independent files here.

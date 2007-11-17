@@ -1,7 +1,6 @@
-USR = /usr
-USRSHARE = $(USR)/share
-USRBIN = $(USR)/bin
-USRLIB = $(USR)/lib
+USRSHARE = $(DESTDIR)/$(PREFIX)/share
+USRBIN = $(DESTDIR)/$(PREFIX)/bin
+USRLIB = $(DESTDIR)/$(PREFIX)/lib
 BONOBOSERVERS = $(USRLIB)/bonobo/servers
 
 clean:
@@ -11,6 +10,7 @@ clean:
 create-install-dirs:
 	mkdir -p $(USRSHARE)/bombmaker
 	mkdir -p $(USRSHARE)/bombmaker/icons
+	mkdir -p $(BONOBOSERVERS)
 
 install: create-install-dirs
 	install -m 644 GNOME_BombMakerApplet.server $(BONOBOSERVERS)
