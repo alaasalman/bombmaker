@@ -1,6 +1,7 @@
-USRSHARE = $(DESTDIR)/$(PREFIX)/share
-USRBIN = $(DESTDIR)/$(PREFIX)/bin
-USRLIB = $(DESTDIR)/$(PREFIX)/lib
+PREFIX ?= /usr/local
+USRSHARE = $(DESTDIR)$(PREFIX)/share
+USRBIN = $(DESTDIR)$(PREFIX)/bin
+USRLIB = $(DESTDIR)$(PREFIX)/lib
 BONOBOSERVERS = $(USRLIB)/bonobo/servers
 
 clean:
