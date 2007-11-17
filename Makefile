@@ -12,6 +12,7 @@ create-install-dirs:
 	mkdir -p $(USRSHARE)/bombmaker
 	mkdir -p $(USRSHARE)/bombmaker/icons
 	mkdir -p $(BONOBOSERVERS)
+	mkdir -p $(USRBIN)
 
 install: create-install-dirs
 	install -m 644 GNOME_BombMakerApplet.server $(BONOBOSERVERS)
