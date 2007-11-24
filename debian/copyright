@@ -1,11 +1,9 @@
-This package was debianized by John <alaa@codedemigod.com> on
+This package was debianized by Alaa Salman <alaa@codedemigod.com> on
 Sat, 17 Nov 2007 16:48:19 +0200.
-
-It was downloaded from <url://example.com>
 
 Upstream Author(s): 
 
-    Alaa Salman<put author's name and email here>
+    Alaa Salman<alaa@codedemigod.com>
 
 
 Copyright: 
@@ -31,9 +29,5 @@ License:
 On Debian systems, the complete text of the GNU General
 Public License can be found in `/usr/share/common-licenses/GPL'.
 
-The Debian packaging is (C) 2007, John <alaa@codedemigod.com> and
+The Debian packaging is (C) 2007, Alaa Salman <alaa@codedemigod.com> and
 is licensed under the GPL, see above.
-
-
-# Please also look if there are files or directories which have a
-# different copyright/license attached and list them here.
