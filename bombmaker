@@ -9,7 +9,7 @@ import os
 import pynotify
 import gobject
 
-
+icon_path = "/usr/share/bombmaker/icons"
 
 def on_Bomb1(event, data = None):
     timer_Activate(60000, "KABOOM", "Your 1 min bomb just exploded.")
@@ -77,7 +77,7 @@ def on_Timer_Set(event, data = None):
     dialog.vbox.add(extraMessageVBox)
     
     
-    dialog.set_icon_from_file("icons/icon.png")    
+    dialog.set_icon_from_file(icon_path + "/icon.png")    
     dialog.show_all()
     
     if(dialog.run() == gtk.RESPONSE_ACCEPT):
@@ -125,15 +125,15 @@ def on_About_Press(event, data = None):
     about.set_authors(["Alaa Salman <alaa@codedemigod.com>", "Icons from FriendlyFire collection by sniffels@devianART"])
     about.set_copyright("Copyright 2007")
     about.set_license("GNU General Public License v.2")
-    about.set_logo(gtk.gdk.pixbuf_new_from_file("icons/icon.png"))
-    about.set_icon_from_file("/home/john/dev/pyapplet/icons/icon.png")
+    about.set_logo(gtk.gdk.pixbuf_new_from_file(icon_path + "/icon.png"))
+    about.set_icon_from_file(icon_path + "/icon.png")
     if(about.run() == gtk.RESPONSE_CANCEL):
         about.destroy()
     
     
 def on_Timer_Expire(timerTitle, timerMessage):
     pynotify.init("Bomb Maker Applet")
-    notification = pynotify.Notification(timerTitle, timerMessage, "icons/kaboombomb.png")
+    notification = pynotify.Notification(timerTitle, timerMessage, icon_path + "/kaboombomb.png")
     notification.set_urgency(pynotify.URGENCY_LOW)
     notification.set_timeout(0)
     notification.show()
@@ -146,16 +146,16 @@ def timer_Activate(timeTillExpiration = 3000, timerTitle = "Bomb Applet", timerM
 def sample_factory(applet, iid):
         
     image = gtk.Image()
-    image.set_from_file("icons/panelicon.png")
+    image.set_from_file(icon_path + "/panelicon.png")
     
     ppmenu_xml = """
         <popup name="button3">
            
-            <submenu name="BombsMenu" label="Bombs" pixtype="filename" pixname="icons/bombsicon.png">
-                <menuitem name="m1" verb="Bomb1" label="Baby Bomb(1min)" pixtype="filename" pixname="icons/babybomb.png"/>
-                <menuitem name="m1" verb="Bomb3" label="Regular Bomb(3min)" pixtype="filename" pixname="icons/regularbomb.png"/>
-                <menuitem name="m1" verb="Bomb5" label="Big Bomb(5min)" pixtype="filename" pixname="icons/bigbomb.png"/>
-                <menuitem name="m2" verb="SetTimer" label="Custom Bomb(custom)" pixtype="filename" pixname="icons/custombomb.png"/>
+            <submenu name="BombsMenu" label="Bombs" pixtype="filename" pixname="/usr/share/bombmaker/icons/bombsicon.png">
+                <menuitem name="m1" verb="Bomb1" label="Baby Bomb(1min)" pixtype="filename" pixname="/usr/share/bombmaker/icons/babybomb.png"/>
+                <menuitem name="m1" verb="Bomb3" label="Regular Bomb(3min)" pixtype="filename" pixname="/usr/share/bombmaker/icons/regularbomb.png"/>
+                <menuitem name="m1" verb="Bomb5" label="Big Bomb(5min)" pixtype="filename" pixname="/usr/share/bombmaker/icons/bigbomb.png"/>
+                <menuitem name="m2" verb="SetTimer" label="Custom Bomb(custom)" pixtype="filename" pixname="/usr/share/bombmaker/icons/custombomb.png"/>
             </submenu>
          
             <menuitem name="About Item" verb="About" stockid="gtk-about"/>
@@ -175,7 +175,7 @@ def sample_factory(applet, iid):
     return True
 
 def run_in_panel():
-    gnomeapplet.bonobo_factory("OAFIID:GNOME_PysampleApplet_Factory", gnomeapplet.Applet.__gtype__, "hello", "1.0", sample_factory)
+    gnomeapplet.bonobo_factory("OAFIID:GNOME_BombMakerApplet_Factory", gnomeapplet.Applet.__gtype__, "hello", "1.0", sample_factory)
 
 def run_in_window():
     main_window = gtk.Window(gtk.WINDOW_TOPLEVEL)
