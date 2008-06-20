@@ -1,4 +1,23 @@
 #!/usr/bin/python
+
+""" 
+    Copyright 2007 Alaa Salman <alaa@codedemigod.com>
+    
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+"""
+
 import pygtk
 pygtk.require('2.0')
 
@@ -9,7 +28,9 @@ import os
 import pynotify
 import gobject
 
-icon_path = "/usr/share/bombmaker/icons"
+ICON_PATH = "/usr/share/bombmaker/icons"
+
+
 
 def on_Bomb1(event, data = None):
     timer_Activate(60000, "KABOOM", "Your 1 min bomb just exploded.")
@@ -77,7 +98,7 @@ def on_Timer_Set(event, data = None):
     dialog.vbox.add(extraMessageVBox)
     
     
-    dialog.set_icon_from_file(icon_path + "/icon.png")    
+    dialog.set_icon_from_file(ICON_PATH + "/icon.png")    
     dialog.show_all()
     
     if(dialog.run() == gtk.RESPONSE_ACCEPT):
@@ -124,16 +145,16 @@ def on_About_Press(event, data = None):
     about.set_website("http://www.codedemigod.com")
     about.set_authors(["Alaa Salman <alaa@codedemigod.com>", "Icons from FriendlyFire collection by sniffels@devianART"])
     about.set_copyright("Copyright 2007")
-    about.set_license("GNU General Public License v.2")
-    about.set_logo(gtk.gdk.pixbuf_new_from_file(icon_path + "/icon.png"))
-    about.set_icon_from_file(icon_path + "/icon.png")
+    about.set_license("GNU General Public License v.3")
+    about.set_logo(gtk.gdk.pixbuf_new_from_file(ICON_PATH + "/icon.png"))
+    about.set_icon_from_file(ICON_PATH + "/icon.png")
     if(about.run() == gtk.RESPONSE_CANCEL):
         about.destroy()
     
     
 def on_Timer_Expire(timerTitle, timerMessage):
     pynotify.init("Bomb Maker Applet")
-    notification = pynotify.Notification(timerTitle, timerMessage, icon_path + "/kaboombomb.png")
+    notification = pynotify.Notification(timerTitle, timerMessage, ICON_PATH + "/kaboombomb.png")
     notification.set_urgency(pynotify.URGENCY_LOW)
     notification.set_timeout(0)
     notification.show()
@@ -146,7 +167,7 @@ def timer_Activate(timeTillExpiration = 3000, timerTitle = "Bomb Applet", timerM
 def sample_factory(applet, iid):
         
     image = gtk.Image()
-    image.set_from_file(icon_path + "/panelicon.png")
+    image.set_from_file(ICON_PATH + "/panelicon.png")
     
     ppmenu_xml = """
         <popup name="button3">
@@ -191,6 +212,7 @@ def run_in_window():
 def main(args):
     if len(args) == 2 and args[1] == "run-in-window":
         run_in_window()
+        
     else:
         run_in_panel()
 
