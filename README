@@ -6,3 +6,13 @@ Bomb Maker is a gnome applet that tries to clone this with a twist. It is a remi
 Installation
 ------------
 The easiest way is if you can download the deb and install that. Or, you can generate the deb yourself from the included packaging files.
+
+Wishlist
+----------
+- add number of remaining reminder to tooltip of icon in taskbar
+- perhaps adding a way to force show those notifications that are still remaining
+- check adding richtext to notify messages
+- look into changing icon sizes in context menu...i think gtk.IconSource
+- Modify icon urls to work properly from package install
+- a way to persist notifications until some activity, that depends on Ubuntu though
+
