@@ -156,7 +156,6 @@ def on_Timer_Expire(timerTitle, timerMessage):
     pynotify.init("Bomb Maker Applet")
     notification = pynotify.Notification(timerTitle, timerMessage, ICON_PATH + "/kaboombomb.png")
     notification.set_urgency(pynotify.URGENCY_LOW)
-    notification.set_timeout(0)
     notification.show()
     
 
