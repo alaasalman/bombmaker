@@ -1,0 +1,8 @@
+bombmaker: a timer Gnome panel applet
+=============================================
+
+Bomb Maker is a gnome applet that tries to clone this with a twist. It is a reminder applet in which you choose a certain bomb type and it goes off after its time period elapses. You can also choose to manufacture a custom bomb type which has a custom time period till explosion and includes a custom message.
+
+Installation
+------------
+The easiest way is if you can download the deb and install that. Or, you can generate the deb yourself from the included packaging files.
